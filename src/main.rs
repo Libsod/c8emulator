@@ -29,7 +29,7 @@ const KEYS: [KeyCode; 16] = [
 ];
 const TICKS_PER_FRAME: usize = 10;
 
-#[macroquad::main(window_conf)]
+#[macroquad::main(window_config)]
 async fn main() {
     let args: Vec<_> = env::args().collect();
     if args.len() != 2 {
@@ -75,7 +75,7 @@ async fn main() {
     }
 }
 
-fn window_conf() -> Conf {
+fn window_config() -> Conf {
     Conf {
         window_title: "Chip-8 Emulator".to_owned(),
         window_width: SCREEN_WIDTH as i32 * SCALE as i32,
