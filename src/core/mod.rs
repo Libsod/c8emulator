@@ -1,4 +1,4 @@
 pub mod emu;
-mod opcode_handlers;
+mod ophandlers;
 
 use emu::Emu;
