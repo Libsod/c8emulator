@@ -1,5 +1,4 @@
 mod core;
-
 use crate::core::emu::{Emu, SCREEN_HEIGHT, SCREEN_WIDTH};
 
 use std::env;
@@ -27,11 +26,13 @@ const KEYS: [KeyCode; 16] = [
     KeyCode::C,
     KeyCode::V,
 ];
+
 const TICKS_PER_FRAME: usize = 10;
 
 #[macroquad::main(window_config)]
 async fn main() {
     let args: Vec<_> = env::args().collect();
+
     if args.len() != 2 {
         println!("Usage: cargo run path/to/game");
         return;
@@ -40,7 +41,6 @@ async fn main() {
     let mut rom = File::open(&args[1]).expect("Unable to open file");
     let mut buffer = Vec::new();
     let mut chip8 = Emu::new();
-
     rom.read_to_end(&mut buffer).unwrap();
     chip8.load(&buffer);
 
@@ -66,10 +66,11 @@ async fn main() {
         for _i in 0..TICKS_PER_FRAME {
             chip8.tick();
         }
+
         chip8.tick_timers();
 
         handle_input(&mut chip8);
-        draw_screen(&chip8).await;
+        draw_screen(&chip8);
 
         next_frame().await;
     }
@@ -93,7 +94,7 @@ fn handle_input(chip8: &mut Emu) {
     }
 }
 
-async fn draw_screen(emu: &Emu) {
+fn draw_screen(emu: &Emu) {
     clear_background(BLACK);
 
     let screen_buf = emu.get_display();
